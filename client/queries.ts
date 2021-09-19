@@ -17,10 +17,26 @@ export const HOME_QUERY = gql`
 `;
 
 export const NAV_QUERY = gql`
-  query {
-    getUser(username: "test") {
+  query ($username: String!) {
+    getUser(username: $username) {
       username
       image
+    }
+  }
+`;
+
+export const REGISTER_MUTATION = gql`
+  mutation ($username: String!, $password: String!) {
+    register(username: $username, password: $password) {
+      accessToken
+    }
+  }
+`;
+
+export const LOGIN_MUTATION = gql`
+  mutation ($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      accessToken
     }
   }
 `;

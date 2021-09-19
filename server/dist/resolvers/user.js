@@ -52,7 +52,9 @@ let UserResolver = class UserResolver {
             console.log(error);
             throw new Error(error);
         }
-        return user;
+        return {
+            accessToken: (0, jsonwebtoken_1.sign)({ userId: user.id }, "sdjkfhklsjdfdsfjskdjssdfsdd", { expiresIn: "5m" }),
+        };
     }
     async login(username, password) {
         const user = await User_1.User.findOne({ username: username });
@@ -76,7 +78,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolver.prototype, "getUser", null);
 __decorate([
-    (0, type_graphql_1.Mutation)(() => User_1.User),
+    (0, type_graphql_1.Mutation)(() => LoginResponse),
     __param(0, (0, type_graphql_1.Arg)("username")),
     __param(1, (0, type_graphql_1.Arg)("password")),
     __metadata("design:type", Function),

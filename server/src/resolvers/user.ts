@@ -20,7 +20,7 @@ export class UserResolver {
     return user;
   }
 
-  @Mutation(() => User)
+  @Mutation(() => LoginResponse)
   async register(@Arg("username") username: string, @Arg("password") password: string) {
     const hashedPassword = await argon2.hash(password);
     const image = `https://avatars.dicebear.com/api/avataaars/${username}.svg`;
@@ -37,7 +37,9 @@ export class UserResolver {
       console.log(error);
       throw new Error(error);
     }
-    return user;
+    return {
+      accessToken: sign({ userId: user.id }, "sdjkfhklsjdfdsfjskdjssdfsdd", { expiresIn: "5m" }),
+    };
   }
 
   @Mutation(() => LoginResponse)

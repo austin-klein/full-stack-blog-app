@@ -10,22 +10,13 @@ const Home: NextPage = () => {
   if (error) {
     console.log(error);
   }
-  console.log(data.getUser.image);
 
   return (
     <main>
       {loading ? <div>loading...</div> : null}
 
       <section className={styles.container}>
-        <div>
-          <Image
-            unoptimized={true}
-            src={`${data.getUser.image}`}
-            alt="person image"
-            width={100}
-            height={100}
-          />
-        </div>
+        <div></div>
         {data ? (
           data.posts.map((post: any) => {
             return (

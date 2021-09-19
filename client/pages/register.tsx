@@ -1,26 +1,34 @@
 import type { NextPage } from "next";
 import { FormEvent, useState } from "react";
-import { useQuery } from "@apollo/client";
 import styles from "../styles/Forms.module.scss";
+import { useMutation } from "@apollo/client";
+import { REGISTER_MUTATION } from "../queries";
+import { useRouter } from "next/router";
 
 const Register: NextPage = () => {
+  const [registerUser] = useMutation(REGISTER_MUTATION);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  interface Registerdata {
-    username: string;
-    password: string;
-  }
+  const router = useRouter();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data: Registerdata = {
-      username,
-      password,
-    };
-
-    console.log(data);
+    try {
+      const { data } = await registerUser({
+        variables: {
+          username,
+          password,
+        },
+      });
+      console.log(data.register.accessToken);
+      localStorage.setItem("accessToken", data.register.accessToken);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
