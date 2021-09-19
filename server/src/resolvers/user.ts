@@ -11,18 +11,24 @@ class LoginResponse {
 
 @Resolver()
 export class UserResolver {
-  @Query(() => String)
-  hello() {
-    return "hello there";
+  @Query(() => User)
+  async getUser(@Arg("username") username: string) {
+    const user = await User.findOne({ username });
+    if (!user) {
+      throw new Error("user doesnt exsist");
+    }
+    return user;
   }
 
   @Mutation(() => User)
   async register(@Arg("username") username: string, @Arg("password") password: string) {
     const hashedPassword = await argon2.hash(password);
+    const image = `https://avatars.dicebear.com/api/avataaars/${username}.svg`;
 
     const user = User.create({
       username,
       password: hashedPassword,
+      image,
     });
 
     try {

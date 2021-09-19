@@ -15,4 +15,8 @@ export class Post extends BaseEntity {
   @Field()
   @Column()
   text: string;
+
+  @Field()
+  @Column({ nullable: true })
+  userId: string;
 }

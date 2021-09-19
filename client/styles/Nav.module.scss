@@ -1,13 +1,20 @@
 .nav {
-  height: 50px;
+  height: 70px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
+  .content {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-  & > * {
-    margin: 0 10px;
-    text-transform: uppercase;
+    .user {
+      display: flex;
+    }
+
+    .links > * {
+      margin: 0 10px;
+      text-transform: uppercase;
+    }
   }
 }

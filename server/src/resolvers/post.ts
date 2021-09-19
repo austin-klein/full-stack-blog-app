@@ -6,14 +6,20 @@ export class PostResolver {
   @Query(() => [Post])
   posts(): Promise<Post[]> {
     const posts = Post.find({});
+
     return posts;
   }
 
   @Mutation(() => Post)
-  async createPost(@Arg("title") title: string, @Arg("text") text: string) {
+  async createPost(
+    @Arg("title") title: string,
+    @Arg("text") text: string,
+    @Arg("userId") userId: string
+  ) {
     const post = Post.create({
       title,
       text,
+      userId,
     });
 
     try {

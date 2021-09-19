@@ -1,21 +1,31 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import { useQuery } from "@apollo/client";
-import { GET_ALL_POSTS_QUERY } from "../queries";
+import { HOME_QUERY } from "../queries";
 import styles from "../styles/Home.module.scss";
 
 const Home: NextPage = () => {
-  const { loading, error, data } = useQuery(GET_ALL_POSTS_QUERY);
+  const { loading, error, data } = useQuery(HOME_QUERY);
 
   if (error) {
     console.log(error);
   }
-  console.log(data);
+  console.log(data.getUser.image);
+
   return (
     <main>
       {loading ? <div>loading...</div> : null}
 
       <section className={styles.container}>
+        <div>
+          <Image
+            unoptimized={true}
+            src={`${data.getUser.image}`}
+            alt="person image"
+            width={100}
+            height={100}
+          />
+        </div>
         {data ? (
           data.posts.map((post: any) => {
             return (
@@ -24,7 +34,7 @@ const Home: NextPage = () => {
                   <h2>{post.title}</h2>
                   <div className={styles.right}>
                     <Image src="/vercel.svg" alt="person image" width={50} height={50} />
-                    <h3>Person Name</h3>
+                    <h3>{post.userId}</h3>
                   </div>
                 </div>
 

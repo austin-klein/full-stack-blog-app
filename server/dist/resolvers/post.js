@@ -20,10 +20,11 @@ let PostResolver = class PostResolver {
         const posts = Post_1.Post.find({});
         return posts;
     }
-    async createPost(title, text) {
+    async createPost(title, text, userId) {
         const post = Post_1.Post.create({
             title,
             text,
+            userId,
         });
         try {
             await post.save();
@@ -45,8 +46,9 @@ __decorate([
     (0, type_graphql_1.Mutation)(() => Post_1.Post),
     __param(0, (0, type_graphql_1.Arg)("title")),
     __param(1, (0, type_graphql_1.Arg)("text")),
+    __param(2, (0, type_graphql_1.Arg)("userId")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String, String, String]),
     __metadata("design:returntype", Promise)
 ], PostResolver.prototype, "createPost", null);
 PostResolver = __decorate([

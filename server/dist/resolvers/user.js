@@ -30,14 +30,20 @@ LoginResponse = __decorate([
     (0, type_graphql_1.ObjectType)()
 ], LoginResponse);
 let UserResolver = class UserResolver {
-    hello() {
-        return "hello there";
+    async getUser(username) {
+        const user = await User_1.User.findOne({ username });
+        if (!user) {
+            throw new Error("user doesnt exsist");
+        }
+        return user;
     }
     async register(username, password) {
         const hashedPassword = await argon2_1.default.hash(password);
+        const image = `https://avatars.dicebear.com/api/avataaars/${username}.svg`;
         const user = User_1.User.create({
             username,
             password: hashedPassword,
+            image,
         });
         try {
             await user.save();
@@ -63,11 +69,12 @@ let UserResolver = class UserResolver {
     }
 };
 __decorate([
-    (0, type_graphql_1.Query)(() => String),
+    (0, type_graphql_1.Query)(() => User_1.User),
+    __param(0, (0, type_graphql_1.Arg)("username")),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], UserResolver.prototype, "hello", null);
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserResolver.prototype, "getUser", null);
 __decorate([
     (0, type_graphql_1.Mutation)(() => User_1.User),
     __param(0, (0, type_graphql_1.Arg)("username")),

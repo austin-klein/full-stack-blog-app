@@ -17,4 +17,8 @@ export class User extends BaseEntity {
   @Field()
   @Column()
   password: string;
+
+  @Field()
+  @Column({ nullable: true })
+  image: string;
 }
